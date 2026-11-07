@@ -1,5 +1,6 @@
 const display = document.querySelector("#display");
 const buttons = document.querySelector(".calculator-buttons");
+// Keep the displayed number, pending operation, and last calculation.
 let current = "0";
 let total = null;
 let operator = null;
@@ -22,6 +23,7 @@ function clear() {
     render();
 }
 
+// Start a new number after an operator or a result.
 function inputDigit(digit) {
     if (current === "Error") clear();
     if (startNewNumber) {
@@ -57,6 +59,7 @@ function calculate(left, right, operation) {
     }
 }
 
+// Show an error for invalid results and round long decimals.
 function showResult(result) {
     if (!Number.isFinite(result)) {
         clear();
@@ -70,6 +73,7 @@ function showResult(result) {
     return true;
 }
 
+// Finish the pending calculation before starting the next one.
 function chooseOperator(nextOperator) {
     if (current === "Error") return;
     if (operator && !startNewNumber) {
@@ -93,6 +97,7 @@ function equals() {
         operator = null;
         total = null;
     } else if (lastOperator) {
+        // Pressing equals again repeats the last calculation.
         if (!showResult(calculate(Number(current), lastOperand, lastOperator))) return;
     }
     startNewNumber = true;
@@ -111,6 +116,7 @@ function backspace() {
     render();
 }
 
+// Use each button’s data attributes to choose an action.
 buttons.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (!button) return;
@@ -129,6 +135,7 @@ const keyboardOperators = {
     "/": "divide"
 };
 
+// Keyboard shortcuts use the same actions as the buttons.
 document.addEventListener("keydown", (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     const key = event.key;

@@ -33,6 +33,7 @@ body {
     white-space: nowrap;
 }
 
+/* The black background shows through the gaps between the keys. */
 .calculator-buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -76,6 +77,7 @@ button:focus-visible {
     background: #dd8d37;
 }
 
+/* Clear spans two columns and zero spans three. */
 .double {
     grid-column: span 2;
 }
